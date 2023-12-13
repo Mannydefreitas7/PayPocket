@@ -1,12 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
+using PayPocket.API.Services;
 
 namespace PayPocket.API.Controllers;
 
-public class AuthenticationController : Controller
+public class AuthenticationController : ControllerBase
 {
-    // GET
-    public IActionResult Index()
+
+    private readonly SupabaseClientService _clientService;
+
+    public AuthenticationController(SupabaseClientService clientService)
     {
-        return View();
+        _clientService = clientService;
+        
+
     }
+    
+    
+    
+
 }

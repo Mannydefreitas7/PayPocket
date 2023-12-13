@@ -1,9 +1,24 @@
-var builder = WebApplication.CreateBuilder(args);
+using PayPocket.API.Services;
 
+var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllers();
+builder.Services.AddTransient<SupabaseClientService>(client =>
+{
+    var key = configuration.GetValue<string>("Supabase:SUPABASE_KEY");
+    var url = configuration.GetValue<string>("Supabase:SUPABASE_URL");
+    if (url != null && key != null)
+    {
+        return new SupabaseClientService(url, key);
+    }
+
+    throw new Exception("Cannot find key and url");
+});
 
 var app = builder.Build();
 
@@ -13,7 +28,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.MapControllers();
 app.UseHttpsRedirection();
 
 var summaries = new[]
@@ -23,6 +38,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
     {
+
         var forecast = Enumerable.Range(1, 5).Select(index =>
                 new WeatherForecast
                 (

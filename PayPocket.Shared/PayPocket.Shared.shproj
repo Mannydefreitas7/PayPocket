@@ -3,6 +3,9 @@
     <PropertyGroup Label="Globals">
         <ProjectGuid>{B1EA90B4-159D-4AAA-B905-BDDEE64D54F8}</ProjectGuid>
     </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'shared|AnyCPU' ">
+      <OutputPath>bin\shared\</OutputPath>
+    </PropertyGroup>
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props"
             Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
     <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.Common.Default.props"/>
