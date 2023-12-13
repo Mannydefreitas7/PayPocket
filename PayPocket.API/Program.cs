@@ -8,6 +8,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
+builder.Services.AddTransient<AuthenticationService>();
 builder.Services.AddTransient<SupabaseClientService>(client =>
 {
     var key = configuration.GetValue<string>("Supabase:SUPABASE_KEY");
@@ -38,6 +39,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
     {
+        var url = configuration.GetValue<string>("Supabase:SUPABASE_URL");
 
         var forecast = Enumerable.Range(1, 5).Select(index =>
                 new WeatherForecast
